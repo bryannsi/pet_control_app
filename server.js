@@ -2,7 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 
 import { PORT } from '#utils/config.js'
-import { setupRoutes } from '#utils/routes.js'
+import setupRoutes from '#utils/routes.js'
 const app = express()
 
 // middliware

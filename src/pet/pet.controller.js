@@ -6,13 +6,15 @@ export class PetController {
   }
 
   static modifyPet (req, res) {
-    console.log('Mascota con ID modificada')
+    const { id } = req.params
+    console.log(`Mascota con ID ${id} modificada`)
     res.send('this is modifyPet method')
     // Lógica para modificar una mascota según su ID
   }
 
   static deletePet (req, res) {
-    console.log('Mascota con ID eliminada')
+    const { id } = req.params
+    console.log(`Mascota con ID ${id} eliminada`)
     res.send('this is deletePet method')
     // Lógica para eliminar una mascota según su ID
   }
@@ -22,7 +24,8 @@ export class PetController {
   }
 
   static findPetById (req, res) {
-    console.log('La mascota con el ID es:')
+    const { id } = req.params
+    console.log(`La mascota con el ID es: ${id}`)
     res.send('this is findPetById method')
   }
 }

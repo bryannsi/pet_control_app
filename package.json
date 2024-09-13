@@ -8,7 +8,7 @@
     "#utils/*": "./src/utils/*"
   },
   "scripts": {
-    "dev": "node --watch server.js",
+    "dev": "node --env-file .env --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

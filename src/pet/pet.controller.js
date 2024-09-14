@@ -28,7 +28,8 @@ export class PetController {
 
   static async findPetById (req, res) {
     const { id } = req.params
-    console.log(`La mascota con el ID es: ${id}`)
+    const result = pet.findById(id)
+    console.log(result)
     res.send('this is findPetById method')
   }
 }

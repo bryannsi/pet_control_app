@@ -1,32 +1,83 @@
 import { medical } from './medical.model.js'
+
 export class MedicalController {
-  static getMedicalHistory (req, res) {
-    const { petId } = req.params
-    const result = medical.getAlls(petId, 10, 10)
-    res.json(result)
+  // Método para obtener el historial médico
+  static async getMedicalHistory (req, res) {
+    try {
+      const { petId } = req.params
+      let { limit, offset } = req.query
+
+      limit = parseInt(limit, 10)
+      offset = parseInt(offset, 10)
+
+      const result = await medical.getAlls(petId, limit, offset)
+      res.status(200).json(result)
+    } catch (error) {
+      console.error('Error getting medical history:', error)
+      res.status(500).json({ error: 'Failed to retrieve medical history' })
+    }
   }
 
-  static getMedicalRecord (req, res) {
-    const { petId, recordId } = req.params
-    console.log(`El registro médico de ID ${recordId} pertenece a la mascotora con ID ${petId} `)
-    res.send('this is getMedicalRecord method')
+  // Método para obtener un registro médico específico
+  static async getMedicalRecord (req, res) {
+    try {
+      const { petId, recordId } = req.params
+      const result = await medical.findById(petId, recordId)
+
+      if (result) {
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Record not found' })
+      }
+    } catch (error) {
+      console.error('Error getting medical record:', error)
+      res.status(500).json({ error: 'Failed to retrieve medical record' })
+    }
   }
 
-  static addMedicalRecord (req, res) {
-    const { petId } = req.params
-    console.log(`Registro médico añadido al historial de la mascota con ID ${petId} `)
-    res.send('this is addMedicalRecord method')
+  // Método para agregar un nuevo registro médico
+  static async addMedicalRecord (req, res) {
+    try {
+      const pet = { petId: req.params.petId, ...req.body }
+      const result = await medical.create(pet)
+      res.status(201).json(result)
+    } catch (error) {
+      console.error('Error adding medical record:', error)
+      res.status(500).json({ error: 'Failed to add medical record' })
+    }
   }
 
-  static updateMedicalRecord (req, res) {
-    const { petId, recordId } = req.params
-    console.log(`El registro médico de ID ${recordId} de la mascotora con ID ${petId} se ha actualizado`)
-    res.send('this is updateMedicalRecord method')
+  // Método para actualizar un registro médico
+  static async updateMedicalRecord (req, res) {
+    try {
+      const pet = { id: req.params.recordId, ...req.body }
+      const result = await medical.modify(pet)
+
+      if (result) {
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Record not found' })
+      }
+    } catch (error) {
+      console.error('Error updating medical record:', error)
+      res.status(500).json({ error: 'Failed to update medical record' })
+    }
   }
 
-  static deleteMedicalRecord (req, res) {
-    const { petId, recordId } = req.params
-    console.log(`El registro médico de ID ${recordId} de la mascotora con ID ${petId} se ha eliminado`)
-    res.send('this is deleteMedicalRecord method')
+  // Método para eliminar un registro médico
+  static async deleteMedicalRecord (req, res) {
+    try {
+      const { recordId } = req.params
+      const result = await medical.remove(recordId)
+
+      if (result) {
+        res.status(204).send() // No content
+      } else {
+        res.status(404).json({ error: 'Record not found' })
+      }
+    } catch (error) {
+      console.error('Error deleting medical record:', error)
+      res.status(500).json({ error: 'Failed to delete medical record' })
+    }
   }
 }

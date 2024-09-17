@@ -10,7 +10,7 @@ const dbConfig = {
   user: DB.user,
   password: DB.password,
   max: DB.max,
-  ssl: { rejectUnauthorized: DB.sslRejectUnauthorized } // SSL settings for secure connections
+  ssl: DB.sslRejectUnauthorized // SSL settings for secure connections
 }
 
 // Initialize pg-promise

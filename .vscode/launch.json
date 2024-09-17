@@ -7,11 +7,16 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch Program with .env",
+      "program": "${workspaceFolder}\\server.js",
+      "runtimeArgs": [
+        "--env-file", 
+        ".env"  // Asegúrate de que el archivo .env está en la ruta adecuada
+      ],
+      "envFile": "${workspaceFolder}/.env",  // Si tu .env está en la raíz del proyecto
       "skipFiles": [
         "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}\\server.js"
+      ]
     }
   ]
 }

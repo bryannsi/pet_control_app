@@ -2,7 +2,7 @@ import { medical } from './medical.model.js'
 
 export class MedicalController {
   // Método para obtener el historial médico
-  static async getMedicalHistory (req, res) {
+  static async getAlls (req, res) {
     try {
       const { petId } = req.params
       let { limit, offset } = req.query
@@ -19,7 +19,7 @@ export class MedicalController {
   }
 
   // Método para obtener un registro médico específico
-  static async getMedicalRecord (req, res) {
+  static async findById (req, res) {
     try {
       const { petId, recordId } = req.params
       const result = await medical.findById(petId, recordId)
@@ -36,7 +36,7 @@ export class MedicalController {
   }
 
   // Método para agregar un nuevo registro médico
-  static async addMedicalRecord (req, res) {
+  static async create (req, res) {
     try {
       const pet = { petId: req.params.petId, ...req.body }
       const result = await medical.create(pet)
@@ -48,7 +48,7 @@ export class MedicalController {
   }
 
   // Método para actualizar un registro médico
-  static async updateMedicalRecord (req, res) {
+  static async modify (req, res) {
     try {
       const pet = { id: req.params.recordId, ...req.body }
       const result = await medical.modify(pet)
@@ -65,7 +65,7 @@ export class MedicalController {
   }
 
   // Método para eliminar un registro médico
-  static async deleteMedicalRecord (req, res) {
+  static async remove (req, res) {
     try {
       const { recordId } = req.params
       const result = await medical.remove(recordId)

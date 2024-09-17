@@ -30,9 +30,7 @@ const findById = async (petId, recordId) => {
 const create = async (pet) => {
   return handleQuery(
     (params) => db.one(
-      'INSERT INTO medical (petId, name, breedId, observations, date) RETURNING idRecord',
-      params
-    ),
+      'INSERT INTO medical (petId, name, breedId, observations, date) RETURNING idRecord', params),
     [pet.idPet, pet.name, pet.breedId, pet.observations, pet.date]
   )
 }
@@ -41,9 +39,7 @@ const create = async (pet) => {
 const modify = async (pet) => {
   return handleQuery(
     (params) => db.result(
-      'UPDATE medical SET observations = $1 WHERE idRecord = $2',
-      params
-    ),
+      'UPDATE medical SET observations = $1 WHERE idRecord = $2', params),
     [pet.observations, pet.idRecord]
   )
 }

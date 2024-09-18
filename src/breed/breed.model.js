@@ -26,7 +26,7 @@ const findById = async (breedId) => {
 
 const create = async (breedData) => {
   return handleQuery(
-    (params) => db.one('INSERT INTO breed(name, description) VALUES ($1, $2)', params),
+    (params) => db.one('INSERT INTO breed(name, description) VALUES ($1, $2) RETURNING breed_id', params),
     [breedData.name, breedData.description]
   )
 }

@@ -4,9 +4,8 @@ const handleQuery = async (queryFunction, params) => {
   try {
     return await queryFunction(params)
   } catch (error) {
-    console.log('_____________executed query_____________')
-    console.log(queryFunction)
-    console.error('Database query error:', error)
+    console.error('Executed query:', error.query)
+    console.error(error.name, error.message)
     throw new Error('Database query failed')
   }
 }

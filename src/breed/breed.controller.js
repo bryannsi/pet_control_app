@@ -35,7 +35,7 @@ export class BreedController {
     try {
       const breedData = req.body
       const result = await breed.create(breedData)
-      res.status(201).json(result)
+      res.status(201).json({ message: 'successfully created', data: { id: result } })
     } catch (error) {
       console.error('Error adding breed record:', error)
       res.status(500).json({ error: 'Failed to add breed record' })
@@ -46,7 +46,7 @@ export class BreedController {
     try {
       const breedData = { breedId: req.params.breedId, ...req.body }
       const result = await breed.modify(breedData)
-      result ? res.status(200).json(result) : res.status(404).json({ error: 'Record not found' })
+      result ? res.status(200).json({ message: 'successfully updated' }) : res.status(404).json({ error: 'Record not found' })
     } catch (error) {
       console.error('Error updating breed record:', error)
     }
@@ -56,7 +56,7 @@ export class BreedController {
     try {
       const { breedId } = req.params
       const result = await breed.remove(breedId)
-      result ? res.status(200).json(result) : res.status(404).json({ error: 'Record not found' })
+      result ? res.status(200).json({ message: 'successfully removed' }) : res.status(404).json({ error: 'Record not found' })
     } catch (error) {
       console.error('Error removing breed record:', error)
       res.status(500).json({ error: 'Failed to remove breed record' })

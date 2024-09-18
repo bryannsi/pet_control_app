@@ -11,7 +11,8 @@
       "program": "${workspaceFolder}\\server.js",
       "runtimeArgs": [
         "--env-file", 
-        ".env"  // Asegúrate de que el archivo .env está en la ruta adecuada
+        ".env", // Asegúrate de que el archivo .env está en la ruta adecuada
+        "--watch"
       ],
       "envFile": "${workspaceFolder}/.env",  // Si tu .env está en la raíz del proyecto
       "skipFiles": [

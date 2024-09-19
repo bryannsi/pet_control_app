@@ -5,7 +5,7 @@ const errorCatalog = {
     fields: {
       email: 'El correo electrónico ya está registrado.'
     },
-    logMessage: 'Violación de restricción de unicidad' // Mensaje técnico para el registro interno
+    logMessage: 'Violación de restricción de unicidad'
   },
   23503: {
     clientMessage: 'Hay un problema con los datos relacionados.',

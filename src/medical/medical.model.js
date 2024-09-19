@@ -1,14 +1,5 @@
 import { db } from '../db/dbConfig.js'
-
-// Función para manejar consultas y errores
-const handleQuery = async (queryFunction, params) => {
-  try {
-    return await queryFunction(params)
-  } catch (error) {
-    console.error('Database query error:', error)
-    throw new Error('Database query failed')
-  }
-}
+import handleQuery from '../db/handleQuery.js'
 
 // Obtener múltiples registros médicos
 const getAlls = async (idPet, limit, offset) => {

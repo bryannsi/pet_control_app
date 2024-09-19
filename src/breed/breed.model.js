@@ -1,14 +1,5 @@
 import { db } from '../db/dbConfig.js'
-
-const handleQuery = async (queryFunction, params) => {
-  try {
-    return await queryFunction(params)
-  } catch (error) {
-    console.error('Executed query:', error.query)
-    console.error(error.name, error.message)
-    throw new Error('Database query failed')
-  }
-}
+import handleQuery from '../db/handleQuery.js'
 
 const getAlls = async (limit, offset) => {
   return handleQuery(

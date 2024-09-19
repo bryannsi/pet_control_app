@@ -1,8 +1,8 @@
-import { createBreedRouter } from '../breed/breed.route.js'
-import { createMedicalRouter } from '../medical/medical.route.js'
-import { createOwnerRouter } from '../owner/owner.route.js'
-import { createPetRouter } from '../pet/pet.route.js'
-import { createUserRouter } from '../user/user.route.js'
+import { createBreedRouter } from '#modules/breed/breed.route.js'
+import { createMedicalRouter } from '#modules/medical/medical.route.js'
+import { createOwnerRouter } from '#modules/owner/owner.route.js'
+import { createPetRouter } from '#modules/pet/pet.route.js'
+import { createUserRouter } from '#modules/user/user.route.js'
 
 export default function setupRoutes (app) {
   app.use('/user', createUserRouter())

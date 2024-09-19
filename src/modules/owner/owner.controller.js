@@ -1,4 +1,4 @@
-import handleError from '../error/handleError.js'
+import handleError from '../../error/handleError.js'
 import { owner } from './owner.model.js'
 
 export class OwnerController {

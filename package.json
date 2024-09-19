@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "imports": {
-    "#utils/*": "./src/utils/*"
+    "#utils/*": "./src/utils/*",
+    "#modules/*": "./src/modules/*",
+    "#db/*": "./src/db/*"
   },
   "scripts": {
     "dev": "node --env-file .env --watch server.js",

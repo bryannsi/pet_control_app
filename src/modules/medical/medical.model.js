@@ -1,5 +1,5 @@
-import { db } from '../db/dbConfig.js'
-import handleQuery from '../db/handleQuery.js'
+import { db } from '#db/dbConfig.js'
+import handleQuery from '#db/handleQuery.js'
 
 // Obtener múltiples registros médicos
 const getAlls = async (idPet, limit, offset) => {

@@ -1,5 +1,5 @@
 import { db } from '../db/dbConfig.js'
-import handleQuery from '../db/utils/handleQuery.js'
+import handleQuery from '../db/handleQuery.js'
 
 const getAlls = async (limit, offset) => {
   return handleQuery(

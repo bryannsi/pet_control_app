@@ -1,3 +1,4 @@
+import handleError from '../db/utils/handleError.js'
 import { owner } from './owner.model.js'
 
 export class OwnerController {
@@ -35,10 +36,10 @@ export class OwnerController {
     try {
       const ownerData = req.body
       const result = await owner.create(ownerData)
-      res.status(201).json({ message: 'successfully updated', data: { id: result } })
+      res.status(201).json({ message: 'successfully created', data: { id: result } })
     } catch (error) {
-      console.error('Error adding owner record:', error)
-      res.status(500).json({ error: 'Failed to add owner record' })
+      const errorResponse = handleError(error)
+      res.status(errorResponse.status).json({ error: errorResponse.message })
     }
   }
 

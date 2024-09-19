@@ -1,5 +1,5 @@
 // errorCatalog.js
-export const errorCatalog = {
+const errorCatalog = {
   23505: {
     clientMessage: 'Este valor ya está en uso.',
     fields: {
@@ -28,3 +28,5 @@ export const errorCatalog = {
     logMessage: 'Función no existe en la base de datos'
   }
 }
+
+export default errorCatalog

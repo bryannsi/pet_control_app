@@ -1,7 +1,19 @@
-import handleError from '../../error/handleError.js'
+import BaseController from '#modules/baseController.js'
 import { owner } from './owner.model.js'
 
-export class OwnerController {
+export class OwnerController extends BaseController {
+  static async getAllsBase (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
+      let { limit, offset } = req.query
+
+      limit = parseInt(limit, 10)
+      offset = parseInt(offset, 10)
+
+      const result = await owner.getAlls(limit, offset)
+      return result
+    })
+  }
+
   static async getAlls (req, res) {
     try {
       let { limit, offset } = req.query
@@ -17,30 +29,21 @@ export class OwnerController {
     }
   }
 
-  static async findById (req, res) {
-    try {
+  static async findById (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
       const { ownerId } = req.params
       const result = await owner.findById(ownerId)
-      if (result && result.length > 0) {
-        res.status(200).json(result)
-      } else {
-        res.status(404).json({ error: 'Record not found' })
-      }
-    } catch (error) {
-      // console.error('Error getting the owner:', error)
-      res.status(500).json({ error: 'Failed to retrieve the owner' })
-    }
+      return result && result.length > 0 ? { statusCode: 200, data: result } : { statusCode: 404, data: null }
+    })
   }
 
-  static async create (req, res) {
-    try {
+  static async create (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
       const ownerData = req.body
       const result = await owner.create(ownerData)
-      res.status(201).json({ message: 'successfully created', data: { id: result } })
-    } catch (error) {
-      const errorResponse = handleError(error)
-      res.status(errorResponse.status).json({ error: errorResponse.message })
-    }
+      // Devolver el resultado y el código de estado
+      return { statusCode: 201, data: result } // Código 201 para creación exitosa
+    })
   }
 
   static async modify (req, res) {

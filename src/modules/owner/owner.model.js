@@ -1,5 +1,5 @@
 import { db } from '#db/dbConfig.js'
-import handleQuery from '#db/handleQuery.js'
+import handleQuery from '#handler/handleQuery.js'
 
 const getAlls = async (limit, offset) => {
   return handleQuery(
@@ -24,7 +24,7 @@ const create = async (ownerData) => {
 
 const modify = async (ownerData) => {
   return handleQuery(
-    (params) => db.result('UPDATE owner SET first_name=$2, last_name=$3, email=$4, phone_number=$5, address=$6, user_id=$7, WHERE owner_id = $1', params),
+    (params) => db.none('UPDATE owner SET first_name=$2, last_name=$3, email=$4, phone_number=$5, address=$6, user_id=$7 WHERE owner_id = $1', params),
     [ownerData.ownerId, ownerData.first_name, ownerData.last_name, ownerData.email, ownerData.phone_number, ownerData.address, ownerData.user_id]
   )
 }

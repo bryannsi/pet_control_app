@@ -1,4 +1,4 @@
-import handleError from '#errorHandler/handleError.js'
+import handleError from '#handler/handleError.js'
 import { pet } from './pet.model.js'
 export class PetController {
   static async getAlls (req, res) {

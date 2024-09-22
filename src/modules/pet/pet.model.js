@@ -1,5 +1,5 @@
 import { db } from '#db/dbConfig.js'
-import handleQuery from '#db/handleQuery.js'
+import handleQuery from '#handler/handleQuery.js'
 const getAlls = async (limit, offset) => {
   return handleQuery(
     (params) => db.any('SELECT pet_id, name, birthdate, weight, weight_unit, color, gender, breed_id, owner_id, created_at, updated_at FROM pet LIMIT $1 OFFSET $2', params),

@@ -2,7 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 
 import { PORT } from '#utils/config.js'
-import setupRoutes from '#utils/routes.js'
+import setupRouter from '#utils/router.js'
 const app = express()
 
 // middliware
@@ -10,7 +10,7 @@ app.use(helmet())
 app.use(express.json())
 
 // config all routes
-setupRoutes(app)
+setupRouter(app)
 
 app.get('/', (req, res) => {
   res.send('Pet Control App Server is working fine')

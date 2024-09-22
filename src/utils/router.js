@@ -4,7 +4,7 @@ import { createOwnerRouter } from '#modules/owner/owner.route.js'
 import { createPetRouter } from '#modules/pet/pet.route.js'
 import { createUserRouter } from '#modules/user/user.route.js'
 
-export default function setupRoutes (app) {
+export default function setupRouter (app) {
   app.use('/user', createUserRouter())
   app.use('/pet', createPetRouter())
   app.use('/pet', createMedicalRouter())

@@ -1,4 +1,5 @@
 /* eslint-disable n/handle-callback-err */
+import { ZodError } from 'zod'
 import errorCatalog from './errorCatalog.js'
 
 export const uniqueViolationStrategy = (error) => {
@@ -30,8 +31,21 @@ export const notNullViolationStrategy = (error) => ({
   logMessage: errorCatalog['23502'].logMessage
 })
 
-export const defaultErrorStrategy = (error) => ({
-  status: 500,
-  message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
-  logMessage: 'Error inesperado'
-})
+export const defaultErrorStrategy = (error) => {
+  let message
+  if (error instanceof ZodError) {
+    message = error.errors.map(issue => issue.message)
+
+    return {
+      status: 400,
+      message,
+      logMessage: `Error inesperado: ${JSON.parse(error.message)}`
+    }
+  }
+  // Handle other types of errors (optional)
+  return {
+    status: 500,
+    message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
+    logMessage: 'Error desconocido. Consulte los registros para más detalles.'
+  }
+}

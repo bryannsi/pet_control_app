@@ -1,6 +1,6 @@
-import { defaultErrorStrategy, foreignKeyViolationStrategy, notNullViolationStrategy, uniqueViolationStrategy } from './errorStrategies.js'
+import { defaultErrorStrategy, foreignKeyViolationStrategy, notNullViolationStrategy, uniqueViolationStrategy } from '#error/errorStrategies.js'
 
-const handleError = (error) => {
+const handleErrorStrategy = (error) => {
   let errorResponse
 
   // Seleccionar la estrategia de manejo de errores según el código de error
@@ -20,9 +20,9 @@ const handleError = (error) => {
   }
 
   // Registrar el error utilizando el mensaje proporcionado por la estrategia
-  console.error(`${errorResponse.logMessage}: ${error.detail || 'Sin detalles'}`)
+  console.log(`${errorResponse.logMessage}: ${error.detail || 'Sin detalles'}`)
 
   return errorResponse
 }
 
-export default handleError
+export default handleErrorStrategy

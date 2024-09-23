@@ -4,9 +4,9 @@ class BaseController {
   static async handleRequest (req, res, next, handler) {
     try {
       const { data, statusCode } = await handler(req, res)
-      handleSuccess(data, res, statusCode)
+      handleSuccess(res, data, statusCode)
     } catch (error) {
-      handleError(error, res)
+      handleError(res, error)
     }
   }
 }

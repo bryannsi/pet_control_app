@@ -1,51 +1,61 @@
 /* eslint-disable n/handle-callback-err */
 import { ZodError } from 'zod'
-import errorCatalog from './errorCatalog.js'
 
-export const uniqueViolationStrategy = (error) => {
-  const errorDetail = error.detail || 'Sin detalles'
-  let message
-  switch (true) {
-    case errorDetail.includes('email'):
-      message = errorCatalog['23505'].fields.email
-      break
-    default:
-      message = errorCatalog['23505'].clientMessage
-  }
-  return {
-    status: 400,
-    message,
-    logMessage: errorCatalog['23505'].logMessage
-  }
-}
-
-export const foreignKeyViolationStrategy = (error) => ({
-  status: 400,
-  message: errorCatalog['23503'].clientMessage,
-  logMessage: errorCatalog['23503'].logMessage
-})
-
-export const notNullViolationStrategy = (error) => ({
-  status: 400,
-  message: errorCatalog['23502'].clientMessage,
-  logMessage: errorCatalog['23502'].logMessage
-})
-
-export const defaultErrorStrategy = (error) => {
-  let message
-  if (error instanceof ZodError) {
-    message = error.errors.map(issue => issue.message)
-
+class UniqueViolationStrategy {
+  handle (error) {
+    let message = error.detail || 'Sin detalles'
+    if (message.includes('email')) {
+      message = 'El correo ya está en uso.'
+    } else {
+      message = 'Violación de restricción única.'
+    }
     return {
       status: 400,
       message,
-      logMessage: `Error inesperado: ${JSON.parse(error.message)}`
+      logMessage: 'Violación de restricción única detectada'
     }
   }
-  // Handle other types of errors (optional)
-  return {
-    status: 500,
-    message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
-    logMessage: 'Error desconocido. Consulte los registros para más detalles.'
+}
+
+class ForeignKeyViolationStrategy {
+  handle (error) {
+    return {
+      status: 400,
+      message: 'Violación de clave foránea.',
+      logMessage: 'Clave foránea inválida'
+    }
   }
 }
+
+class NotNullViolationStrategy {
+  handle (error) {
+    return {
+      status: 400,
+      message: 'Un campo obligatorio no puede ser nulo.',
+      logMessage: 'Violación de campo not null'
+    }
+  }
+}
+
+class DefaultErrorStrategy {
+  handle (error) {
+    let message
+    if (error instanceof ZodError) {
+      message = error.errors.map(issue => issue.message)
+
+      return {
+        status: 400,
+        message,
+        logMessage: `Error inesperado: ${JSON.parse(error.message)}`
+      }
+    }
+    // Handle other types of errors (optional)
+    return {
+      status: 500,
+      message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
+      logMessage: 'Error desconocido. Consulte los registros para más detalles.'
+    }
+  }
+}
+
+export { DefaultErrorStrategy, ForeignKeyViolationStrategy, NotNullViolationStrategy, UniqueViolationStrategy }

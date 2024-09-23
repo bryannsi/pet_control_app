@@ -1,6 +1,7 @@
-import handleError from '#handler/handleError.js'
+import HandleErrorStrategy from '#handler/handleError.js'
 import handleSchema from '#handler/handleSchema.js'
 
+const errorHandler = new HandleErrorStrategy()
 export const validateSchema = (schema) => {
   return (req, res, next) => {
     try {
@@ -12,7 +13,7 @@ export const validateSchema = (schema) => {
 
       next() // Si la validación es exitosa, continuar al siguiente middleware/controlador
     } catch (error) {
-      const errorResponse = handleError(error)
+      const errorResponse = errorHandler.handleError(error)
       return res.status(errorResponse.status).json({ error: errorResponse.message })
     }
   }

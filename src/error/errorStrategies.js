@@ -37,6 +37,26 @@ class NotNullViolationStrategy {
   }
 }
 
+class SyntaxErrorStrategy {
+  handle (error) {
+    return {
+      status: 400,
+      message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
+      logMessage: 'La sentencia SQL usada no es válida y no puede ser ejecutada.'
+    }
+  }
+}
+
+class UndefinedColumnStrategy {
+  handle (error) {
+    return {
+      status: 400,
+      message: 'Ocurrió un error inesperado. Inténtelo más tarde.',
+      logMessage: 'Se está itentenado acceder a una columna que no existe en la base de datos.'
+    }
+  }
+}
+
 class DefaultErrorStrategy {
   handle (error) {
     let message
@@ -46,7 +66,7 @@ class DefaultErrorStrategy {
       return {
         status: 400,
         message,
-        logMessage: `Error inesperado: ${JSON.parse(error.message)}`
+        logMessage: `Error inesperado: ${error.message}`
       }
     }
     // Handle other types of errors (optional)
@@ -58,4 +78,4 @@ class DefaultErrorStrategy {
   }
 }
 
-export { DefaultErrorStrategy, ForeignKeyViolationStrategy, NotNullViolationStrategy, UniqueViolationStrategy }
+export { DefaultErrorStrategy, ForeignKeyViolationStrategy, NotNullViolationStrategy, SyntaxErrorStrategy, UndefinedColumnStrategy, UniqueViolationStrategy }

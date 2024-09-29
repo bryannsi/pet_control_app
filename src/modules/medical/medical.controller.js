@@ -1,83 +1,48 @@
+import BaseController from '#modules/baseController.js'
 import { medical } from './medical.model.js'
 
-export class MedicalController {
-  // Método para obtener el historial médico
-  static async getAlls (req, res) {
-    try {
+export class MedicalController extends BaseController {
+  static async getAlls (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
       const { petId } = req.params
-      let { limit, offset } = req.query
+      const { limit, offset } = req.query
 
-      limit = parseInt(limit, 10)
-      offset = parseInt(offset, 10)
-
-      const result = await medical.getAlls(petId, limit, offset)
-      res.status(200).json(result)
-    } catch (error) {
-      console.error('Error getting medical history:', error)
-      res.status(500).json({ error: 'Failed to retrieve medical history' })
-    }
+      const data = await medical.getAlls(petId, limit, offset)
+      return data && data.length > 0 ? { statusCode: 200, data } : { statusCode: 404, data: null }
+    })
   }
 
-  // Método para obtener un registro médico específico
-  static async findById (req, res) {
-    try {
-      const { petId, recordId } = req.params
-      const result = await medical.findById(petId, recordId)
-
-      if (result) {
-        res.status(200).json(result)
-      } else {
-        res.status(404).json({ error: 'Record not found' })
-      }
-    } catch (error) {
-      console.error('Error getting medical record:', error)
-      res.status(500).json({ error: 'Failed to retrieve medical record' })
-    }
+  static async findById (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
+      const { petId, medicalId } = req.params
+      const data = await medical.findById(petId, medicalId)
+      return data && data.length > 0 ? { statusCode: 200, data } : { statusCode: 404, data: null }
+    })
   }
 
-  // Método para agregar un nuevo registro médico
-  static async create (req, res) {
-    try {
-      const pet = { petId: req.params.petId, ...req.body }
-      const result = await medical.create(pet)
-      res.status(201).json(result)
-    } catch (error) {
-      console.error('Error adding medical record:', error)
-      res.status(500).json({ error: 'Failed to add medical record' })
-    }
+  static async create (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
+      const { petId } = req.params
+      const medicalData = req.body
+      const data = await medical.create(petId, medicalData)
+      return { statusCode: 201, data }
+    })
   }
 
-  // Método para actualizar un registro médico
-  static async modify (req, res) {
-    try {
-      const pet = { id: req.params.recordId, ...req.body }
-      const result = await medical.modify(pet)
-
-      if (result) {
-        res.status(200).json(result)
-      } else {
-        res.status(404).json({ error: 'Record not found' })
-      }
-    } catch (error) {
-      console.error('Error updating medical record:', error)
-      res.status(500).json({ error: 'Failed to update medical record' })
-    }
+  static async modify (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
+      const { medicalId } = req.params
+      const medicalData = req.body
+      const data = await medical.modify(medicalId, medicalData)
+      return { statusCode: 200, data }
+    })
   }
 
-  // Método para eliminar un registro médico
-  static async remove (req, res) {
-    try {
-      const { recordId } = req.params
-      const result = await medical.remove(recordId)
-
-      if (result) {
-        res.status(204).send() // No content
-      } else {
-        res.status(404).json({ error: 'Record not found' })
-      }
-    } catch (error) {
-      console.error('Error deleting medical record:', error)
-      res.status(500).json({ error: 'Failed to delete medical record' })
-    }
+  static async remove (req, res, next) {
+    BaseController.handleRequest(req, res, next, async () => {
+      const { medicalId } = req.params
+      const data = await medical.remove(medicalId)
+      return { statusCode: 200, data }
+    })
   }
 }

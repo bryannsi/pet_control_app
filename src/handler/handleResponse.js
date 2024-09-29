@@ -1,9 +1,10 @@
 import HandleErrorStrategy from '#handler/handleError.js'
-
+import handleMessage from './handleMessage.js'
 const errorHandler = new HandleErrorStrategy()
 
-export const handleSuccess = (res, data, statusCode = 200) => {
-  res.status(statusCode).json(data)
+export const handleSuccess = (res, data, entity, statusCode = 200) => {
+  const message = handleMessage(data.rowCount, entity)
+  res.status(statusCode).json(message)
 }
 
 export const handleError = (res, error) => {

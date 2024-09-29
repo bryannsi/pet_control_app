@@ -5,10 +5,10 @@ export function createPetRouter () {
   const petRouter = Router()
   // The end points start with= pet/
   petRouter.get('/', PetController.getAlls) // get all pets
-  petRouter.get('/:id', PetController.findById)
+  petRouter.get('/:petId', PetController.findById)
   petRouter.post('/', PetController.create)
-  petRouter.put('/:id', PetController.modify)
-  petRouter.delete('/:id', PetController.remove)
+  petRouter.put('/:petId', PetController.modify)
+  petRouter.delete('/:petId', PetController.remove)
 
   return petRouter
 }
